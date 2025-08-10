@@ -5,6 +5,7 @@ from aiogram import types, F, Router
 from aiogram.filters import CommandStart, Command
 
 from Filters.chat_type import ChatType
+from keyboards import user_kb
 
 # Создание нового роутера
 user_private_router = Router()
@@ -15,12 +16,15 @@ user_private_router.message.filter(ChatType(['private']))
 async def start_cmd(message: types.Message):
     user_id = message.from_user.id
     first_name = message.from_user.first_name
-    await message.answer(f"Hello, {first_name}! your id is {user_id}")
+    await message.answer(f"Hello, {first_name}! your id is {user_id}", reply_markup=user_kb.start_kb3.as_markup(
+        resize_keyboard=True,
+        input_field_placeholder="chose a command"
+    ))
 
 @user_private_router.message(Command("menu"))
 async def echo(message: types.Message):
     text = message.text
-    await message.reply(text)
+    await message.reply(text, reply_markup=user_kb.del_kb)
 
 
 @user_private_router.message(F.text.contains("!"))
