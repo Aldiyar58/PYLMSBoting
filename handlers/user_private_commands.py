@@ -24,7 +24,7 @@ async def start_cmd(message: types.Message):
 @user_private_router.message(Command("menu"))
 async def echo(message: types.Message):
     text = message.text
-    await message.reply(text, reply_markup=user_kb.del_kb)
+    await message.reply(text, reply_markup=user_kb.test_kb)
 
 
 @user_private_router.message(F.text.contains("!"))
@@ -35,3 +35,11 @@ async def magic_fillter(message: types.Message):
 @user_private_router.message(F.text.startswith('show'), F.text.endswith('example'))
 async def magic_fillter(message: types.Message):
     await message.answer("I check your example")
+
+@user_private_router.message(F.contact)
+async def magic_fillter(message: types.Message):
+    await message.answer(f"{str(message.contact)}")
+
+@user_private_router.message(F.location)
+async def magic_fillter(message: types.Message):
+    await message.answer(f"{str(message.location)}")
