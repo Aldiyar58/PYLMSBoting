@@ -4,12 +4,12 @@
 from aiogram import types, F, Router
 from aiogram.filters import CommandStart, Command
 
-from Filters.chat_type import ChatType
+from Filters.chat_type import ChatTypeFilter
 from keyboards import user_kb
 
 # Создание нового роутера
 user_private_router = Router()
-user_private_router.message.filter(ChatType(['private']))
+user_private_router.message.filter(ChatTypeFilter(['private']))
 
 # Это обработчик(handler) команды "/start".
 @user_private_router.message(CommandStart())

@@ -2,10 +2,10 @@ from string import punctuation
 
 from aiogram import types, F, Router, Bot
 from aiogram.filters import CommandStart, Command
-from Filters.chat_type import ChatType
+from Filters.chat_type import ChatTypeFilter
 
 user_group_router = Router()
-user_group_router.message.filter(ChatType(["group"]))
+user_group_router.message.filter(ChatTypeFilter(["group"]))
 
 BAN_WORDS = {"Кабан", "ban"}
 

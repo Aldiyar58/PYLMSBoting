@@ -20,6 +20,8 @@ ALLOWED_UPDATES = ["message", "edited_message"]
 bot = Bot(token=os.getenv('TOKEN'))
 dp = Dispatcher()
 
+bot.my_admins_list = ['2141191476']
+
 # Регистрация наших роутеров
 dp.include_router(user_private_router)
 dp.include_router(user_group_router)
