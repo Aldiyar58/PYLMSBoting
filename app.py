@@ -13,6 +13,7 @@ load_dotenv(find_dotenv())
 from handlers.user_private_commands import user_private_router
 from utils.private_chat_commands import private_commands
 from handlers.user_group_commands import user_group_router
+from handlers.admin_private_commands import admin_router
 
 ALLOWED_UPDATES = ["message", "edited_message"]
 
@@ -20,9 +21,10 @@ ALLOWED_UPDATES = ["message", "edited_message"]
 bot = Bot(token=os.getenv('TOKEN'))
 dp = Dispatcher()
 
-bot.my_admins_list = ['2141191476']
+bot.my_admins_list = [2141191476]
 
 # Регистрация наших роутеров
+dp.include_router(admin_router)
 dp.include_router(user_private_router)
 dp.include_router(user_group_router)
 

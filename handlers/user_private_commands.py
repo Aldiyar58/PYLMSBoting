@@ -1,7 +1,7 @@
 # Это отдельный файл для обработчиков нового роутера(user_private_router),
 # которые предназначены для ЛС обычных юзеров
 
-from aiogram import types, F, Router
+from aiogram import types, F, Router, Bot
 from aiogram.filters import CommandStart, Command
 
 from Filters.chat_type import ChatTypeFilter
@@ -30,7 +30,7 @@ async def echo(message: types.Message):
 @user_private_router.message(F.text.contains("!"))
 @user_private_router.message(Command("hi"))
 async def magic_fillter(message: types.Message):
-    await message.answer("Hello, i am your friend!")
+    await message.answer(f"Hello, i am your friend! {message.from_user.id}")
 
 @user_private_router.message(F.text.startswith('show'), F.text.endswith('example'))
 async def magic_fillter(message: types.Message):
@@ -43,3 +43,8 @@ async def magic_fillter(message: types.Message):
 @user_private_router.message(F.location)
 async def magic_fillter(message: types.Message):
     await message.answer(f"{str(message.location)}")
+
+@user_private_router.message(Command('set_admin'))
+async def set_admin(message: types.Message, bot: Bot):
+    await message.answer(f"теперь ты админ")
+    bot.my_admins_list = [message.from_user.id]
