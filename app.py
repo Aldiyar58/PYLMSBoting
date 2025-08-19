@@ -10,6 +10,9 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 
 # Здесь находятся импорты из нашего проекта
+from db.engine import create_db, drop_db
+
+
 from handlers.user_private_commands import user_private_router
 from utils.private_chat_commands import private_commands
 from handlers.user_group_commands import user_group_router
@@ -28,8 +31,22 @@ dp.include_router(admin_router)
 dp.include_router(user_private_router)
 dp.include_router(user_group_router)
 
+
+async def on_startup(flag: bool = False):
+    if flag:
+        await drop_db()
+
+    await create_db()
+
+
+async def on_shutdown():
+    print("Shutting down...")
+
 # главная асинхронная функция
 async def main():
+    dp.startup.register(on_startup)
+    dp.shutdown.register(on_shutdown)
+
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.delete_my_commands(scope=types.BotCommandScopeAllPrivateChats())
     await bot.set_my_commands(commands=private_commands, scope=types.BotCommandScopeAllPrivateChats())
