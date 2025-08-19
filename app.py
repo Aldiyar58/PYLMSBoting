@@ -12,9 +12,9 @@ load_dotenv(find_dotenv())
 # Здесь находятся импорты из нашего проекта
 from db.engine import create_db, drop_db
 
+from utils.private_chat_commands import private_commands
 
 from handlers.user_private_commands import user_private_router
-from utils.private_chat_commands import private_commands
 from handlers.user_group_commands import user_group_router
 from handlers.admin_private_commands import admin_router
 
